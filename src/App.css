@@ -1,112 +1,214 @@
-body, html {
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+h2{
+  color:blue;
+  font-size: 250%;
 }
 
 .container {
-  max-width: 90%;
-  margin: auto;
+  width: 90%;
+  max-width: 1200px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 20px;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }
 
 .form-container {
   display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 15px;
   flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-input {
-  padding: 10px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  margin: 20px auto;
   width: 100%;
-  max-width: 250px;
+  max-width: 500px;
 }
 
+.form-container input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  min-width: 100px;
+  text-align: center;
+}
 .add-button {
-  padding: 10px 15px;
-  background: green;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
+  padding: 10px 10px;
+  font-size: 16px;
   cursor: pointer;
+  border-radius: 5px;
   transition: 0.3s;
+  min-width: 120px;
 }
 
 .add-button:hover {
-  background: darkgreen;
+  background-color: #0056b3;
+}
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+  user-select: none;
 }
 
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 0;
-  list-style: none;
+.checkbox-container input {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #007bff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.checkbox-container input:checked {
+  background-color: #007bff;
+  border-color: #007bff;
+  position: relative;
+}
+
+.checkbox-container input:checked::before {
+  content: '✔';
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  position: absolute;
+  left: 3px;
+  top: -1px;
+}
+
+.checkbox-container input:hover {
+  border-color: #0056b3;
+}
+
+.checkbox-container input:checked:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+
+@media (max-width: 500px) {
+  .form-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-container input[type="text"],
+  .add-button {
+    width: 100%;
+  }
+}
+
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 10px;
 }
 
 .card {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: 0.3s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #222;
+}
+
+.card p {
+  margin: 5px 0;
+  color: #555;
+  font-size: 15px;
 }
 
 .button-group {
   display: flex;
   gap: 10px;
-  justify-content: center;
+  margin-top: 10px;
 }
 
-.update-button,
-.delete-button {
-  padding: 8px 12px;
+.update-button, .delete-button {
+  color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 8px;
   cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
   transition: 0.3s;
 }
 
 .update-button {
-  background-color: #007bff;
-  color: white;
+  background-color: #ffc107;
 }
 
 .update-button:hover {
-  background-color: #0056b3;
+  background-color: #e0a800;
 }
 
 .delete-button {
-  background-color: red;
-  color: white;
+  background-color: #dc3545;
 }
 
 .delete-button:hover {
-  background-color: darkred;
+  background-color: #c82333;
 }
 
-@media (max-width: 1024px) {
-  .card-list {
-    grid-template-columns: repeat(2, minmax(250px, 1fr));
+@media (max-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 600px) {
-  .card-list {
-    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .form-container {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
