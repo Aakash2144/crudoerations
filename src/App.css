@@ -16,9 +16,9 @@ h2{
 }
 
 .container {
-  width: 90%;
-  max-width: 1200px;
-  background: #fff;
+  width: 100%;
+  max-width: 1300px;
+  background:#f5f7f5;
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
