@@ -16,7 +16,7 @@ function App() {
   async function fetchPosts() {
     try {
       const response = await axios.get(API_URL);
-      setPosts(response.data.slice(0, 20));
+      setPosts(response.data.slice(0, 8));
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
