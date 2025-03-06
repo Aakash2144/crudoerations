@@ -26,7 +26,6 @@ function App() {
     try {
       const response = await axios.post(API_URL, newPost);
 
-      // Assign a unique ID for local updates
       const createdPost = { ...response.data, id: Date.now() };
 
       setPosts([createdPost, ...posts]);
@@ -101,7 +100,7 @@ function App() {
         {posts.map((post) => (
           <div key={post.id} className="card">
             <h3>{post.title}</h3>
-            <p>Completed: {post.completed ? "✅ Yes" : "❌ No"}</p>
+            <p>Completed: {post.completed ? "Yes" : "No"}</p>
             <div className="button-group">
               <button onClick={() => startEditing(post)} className="update-button">
                 Edit
