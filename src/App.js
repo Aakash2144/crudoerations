@@ -16,8 +16,8 @@ function App() {
   async function fetchPosts() {
     try {
       const response = await axios.get(API_URL);
-      setPosts(response.data.slice(0, 8));
-    } catch (error) {
+      setPosts(response.data.slice(0, 8)); 
+        } catch (error) {
       console.error("Error fetching posts:", error);
     }
   }
@@ -25,7 +25,11 @@ function App() {
   async function createPost() {
     try {
       const response = await axios.post(API_URL, newPost);
-      setPosts([response.data, ...posts]);
+
+      // Assign a unique ID for local updates
+      const createdPost = { ...response.data, id: Date.now() };
+
+      setPosts([createdPost, ...posts]);
       setNewPost({ title: "", completed: false });
     } catch (error) {
       console.error("Error creating post:", error);
@@ -37,18 +41,25 @@ function App() {
     setNewPost({ title: post.title, completed: post.completed });
   }
 
-  async function updatePost() {
+  function updatePost() {
     if (!editingPost) return;
-    try {
-      const response = await axios.put(`${API_URL}/${editingPost.id}`, newPost);
-      setPosts(posts.map((post) =>
-        post.id === editingPost.id ? { ...post, ...response.data } : post
+
+    if (editingPost.id > 200) {
+      setPosts(posts.map(post => 
+        post.id === editingPost.id ? { ...post, ...newPost } : post
       ));
-      setEditingPost(null);
-      setNewPost({ title: "", completed: false });
-    } catch (error) {
-      console.error("Error updating post:", error);
+    } else {
+      axios.put(`${API_URL}/${editingPost.id}`, newPost)
+        .then(response => {
+          setPosts(posts.map(post =>
+            post.id === editingPost.id ? { ...post, ...response.data } : post
+          ));
+        })
+        .catch(error => console.error("Error updating post:", error));
     }
+
+    setEditingPost(null);
+    setNewPost({ title: "", completed: false });
   }
 
   async function deletePost(id) {
@@ -62,45 +73,40 @@ function App() {
 
   return (
     <div className="container">
-      <h2>ToDo List</h2>
-      <div className="form-container">
-  <input
-    type="text"
-    placeholder="Title"
-    value={newPost.title}
-    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-  />
-  
-  <label className="checkbox-container">
-    <input
-      type="checkbox"
-      checked={newPost.completed}
-      onChange={(e) => setNewPost({ ...newPost, completed: e.target.checked })}
-    />
-    Completed
-  </label>
+      <h2>To-Do List</h2>
 
-  <button onClick={editingPost ? updatePost : createPost} className="add-button">
-    {editingPost ? "Update" : "Add"}
-  </button>
-</div>
+      <div className="form-container">
+        <input
+          type="text"
+          placeholder="Title"
+          value={newPost.title}
+          onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+        />
+
+        <label className="checkbox-container">
+          <input
+            type="checkbox"
+            checked={newPost.completed}
+            onChange={(e) => setNewPost({ ...newPost, completed: e.target.checked })}
+          />
+          Completed
+        </label>
+
+        <button onClick={editingPost ? updatePost : createPost} className="add-button">
+          {editingPost ? "Update" : "Add"}
+        </button>
+      </div>
 
       <div className="card-grid">
         {posts.map((post) => (
           <div key={post.id} className="card">
             <h3>{post.title}</h3>
-            <p>Completed: {post.completed ? "Yes" : "No"}</p>
+            <p>Completed: {post.completed ? "✅ Yes" : "❌ No"}</p>
             <div className="button-group">
-              <button
-                onClick={() => startEditing(post)}
-                className="update-button"
-              >
+              <button onClick={() => startEditing(post)} className="update-button">
                 Edit
               </button>
-              <button
-                onClick={() => deletePost(post.id)}
-                className="delete-button"
-              >
+              <button onClick={() => deletePost(post.id)} className="delete-button">
                 Delete
               </button>
             </div>
